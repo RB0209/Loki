@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardContent } from "./components/ui/card";
-import { Button } from "./components/ui/button";
+import { motion } from "framer-motion";
 import "./index.css";
 
 const brandColor = "#0074D9";
@@ -29,62 +28,59 @@ export default function App() {
   const [expanded, setExpanded] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
-      <h1 className="text-4xl font-extrabold text-center mb-8" style={{ color: brandColor }}>
-        Our Journey (2011–2025)
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-4xl font-extrabold text-center mb-10" style={{ color: brandColor }}>
+        Our Timeline Journey
       </h1>
 
-      <div className="flex overflow-x-auto space-x-3 px-2 pb-4 justify-center mb-8">
+      <div className="flex overflow-x-auto gap-3 pb-6 justify-center">
         {years.map((y) => (
-          <Button
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.1 }}
             key={y}
             onClick={() => {
               setYear(String(y));
               setExpanded(null);
             }}
             style={{
-              backgroundColor: year === String(y) ? brandColor : "#ffffff",
-              color: year === String(y) ? "#ffffff" : brandColor,
+              backgroundColor: year === String(y) ? brandColor : "white",
+              color: year === String(y) ? "white" : brandColor,
               border: `2px solid ${brandColor}`,
-              boxShadow: year === String(y)
-                ? "0 4px 14px rgba(0, 116, 217, 0.4)"
-                : "0 2px 8px rgba(0, 116, 217, 0.2)",
-              transform: year === String(y) ? "scale(1.1)" : "scale(1)",
               fontWeight: "bold"
             }}
-            className="min-w-[80px] text-lg transition-all duration-300 ease-in-out hover:brightness-110 hover:-rotate-1"
+            className="px-4 py-2 rounded-lg shadow transition-all"
           >
             {y}
-          </Button>
+          </motion.button>
         ))}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {(data[year] || []).map((title, i) => (
-          <Card
+          <motion.div
             key={i}
-            className={`cursor-pointer bg-white shadow-xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:rotate-[0.5deg] hover:shadow-2xl ${
-              expanded === i ? "scale-105 shadow-2xl z-20" : ""
+            whileHover={{ scale: 1.03 }}
+            className={`bg-white p-4 rounded-xl shadow-md transition-all duration-300 cursor-pointer ${
+              expanded === i ? "ring-4 ring-blue-200" : ""
             }`}
             onClick={() => setExpanded(expanded === i ? null : i)}
           >
-            <CardContent>
-              <div className={`w-full overflow-hidden rounded-lg bg-gray-200 mb-3 relative transition-all duration-500 ease-in-out ${expanded === i ? "h-64" : "h-40"}`}>
-                <img
-                  src={`/images/project${(i % 6) + 1}.jpg`}
-                  alt={title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-bold">{title}</h3>
-              <p className="text-sm text-gray-600">This is a short summary of the project.</p>
-              {expanded === i && (
-                <p className="text-sm text-gray-800 mt-2">
-                  This is a longer description with full project details. It appears when the tile is clicked and expands.
-                </p>
-              )}
-            </CardContent>
-          </Card>
+            <div className="h-40 overflow-hidden rounded-lg mb-3 bg-gray-200">
+              <img
+                src={`/images/project${(i % 6) + 1}.jpg`}
+                alt={title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h2 className="text-lg font-bold mb-1">{title}</h2>
+            <p className="text-sm text-gray-600">Short description of the initiative.</p>
+            {expanded === i && (
+              <p className="text-sm mt-2 text-gray-800">
+                Full details shown here on click. Replace with your actual project description.
+              </p>
+            )}
+          </motion.div>
         ))}
       </div>
     </div>

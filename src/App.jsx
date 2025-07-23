@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
-import "./index.css"; // Ensure styles are loaded
+import "./index.css";
 
 const brandColor = "#0074D9";
 const years = Array.from({ length: 2025 - 2011 + 1 }, (_, i) => 2011 + i);

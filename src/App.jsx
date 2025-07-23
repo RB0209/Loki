@@ -33,59 +33,31 @@ export default function App() {
         Our Journey
       </h1>
 
-      <div className="flex overflow-x-auto space-x-3 px-2 pb-4 justify-center mb-8">
-        {years.map((y) => (
-          <Button
-            key={y}
-            onClick={() => {
-              setYear(String(y));
-              setExpanded(null);
-            }}
-            style={{
-              backgroundColor: year === String(y) ? brandColor : "#ffffff",
-              color: year === String(y) ? "#ffffff" : brandColor,
-              border: `2px solid ${brandColor}`,
-              boxShadow: year === String(y)
-                ? "0 4px 14px rgba(0, 116, 217, 0.4)"
-                : "0 2px 8px rgba(0, 116, 217, 0.2)",
-              transform: year === String(y) ? "scale(1.1)" : "scale(1)",
-              fontWeight: "bold"
-            }}
-            className="min-w-[80px] text-lg transition-all duration-300 ease-in-out hover:brightness-110 hover:-rotate-1"
-          >
-            {y}
-          </Button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {(data[year] || []).map((title, i) => (
-          <Card
-            key={i}
-            className={`cursor-pointer bg-white shadow-xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:rotate-[0.5deg] hover:shadow-2xl ${
-              expanded === i ? "scale-105 shadow-2xl z-20" : ""
-            }`}
-            onClick={() => setExpanded(expanded === i ? null : i)}
-          >
-            <CardContent>
-              <div className={`w-full overflow-hidden rounded-lg bg-gray-200 mb-3 relative transition-all duration-500 ease-in-out ${expanded === i ? "h-64" : "h-40"}`}>
-                <img
-                  src={`/images/project${(i % 6) + 1}.jpg`}
-                  alt={title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-bold">{title}</h3>
-              <p className="text-sm text-gray-600">This is a short summary of the project.</p>
-              {expanded === i && (
-                <p className="text-sm text-gray-800 mt-2">
-                  This is a longer description with full project details. It appears when the tile is clicked and expands.
-                </p>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
-}
+      <div className="relative w-full overflow-x-auto mb-10 px-2 py-4">
+  <div className="flex space-x-6 min-w-max items-center">
+    {years.map((year) => (
+      <button
+        key={year}
+        onClick={() => {
+          setSelectedYear(String(year));
+          setExpandedIndex(null);
+        }}
+        className={`relative group transition-all duration-300 ease-in-out
+          flex flex-col items-center justify-center px-3 py-2
+          ${selectedYear === String(year)
+            ? "text-white bg-[#0074D9] shadow-lg scale-110"
+            : "text-[#0074D9] bg-white border border-[#0074D9] hover:bg-[#0074D9]/10"}
+          rounded-full`}
+        style={{
+          minWidth: "64px",
+          fontWeight: "bold",
+        }}
+      >
+        <span className="text-sm">{year}</span>
+        <span className={`w-2 h-2 rounded-full mt-1 transition-all duration-300 ${
+          selectedYear === String(year) ? "bg-white" : "bg-[#0074D9]"
+        }`}></span>
+      </button>
+    ))}
+  </div>
+</div>
